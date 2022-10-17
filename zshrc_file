@@ -1,0 +1,35 @@
+autoload -Uz promptinit
+if type brew &>/dev/null; then
+  FPATH=$(brew --prefix)/share/zsh/site-functions:$FPATH
+
+  autoload -Uz compinit
+  compinit
+fi
+autoload -Uz compinit && compinit
+autoload -U colors && colors
+export CLICOLOR=1
+export LSCOLORS=ExGxBxDxCxEgEdxbxgxcxd
+alias ls='ls -G'
+promptinit
+
+# Define the theme
+prompt_mytheme_setup() {
+  PS1="%{$fg[green]%}%n%{$reset_color%}@%{$fg[green]%}%m%{$reset_color%}:%{$fg[cyan]%}%~%{$reset_color%}$ "
+}
+
+# Add the theme to promptsys
+prompt_themes+=( mytheme )
+
+# Load the theme
+prompt mytheme
+# Added by furycli:
+export PATH="$HOME/Library/Python/3.9/bin:$PATH"
+eval "$(pyenv virtualenv-init -)"
+eval "$(pyenv init --path)"
+eval "$(pyenv init -)"
+
+export PATH="$HOME/.poetry/bin:$PATH"
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "/usr/local/opt/nvm/nvm.sh" ] && \. "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
+[ -s "/usr/local/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/usr/local/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
