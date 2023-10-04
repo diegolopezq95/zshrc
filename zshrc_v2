@@ -1,0 +1,52 @@
+# Load Zsh's completions system
+autoload -Uz compinit && compinit
+
+# Set up Homebrew if available
+if type brew &>/dev/null; then
+  FPATH=$(brew --prefix)/share/zsh/site-functions:$FPATH
+  autoload -Uz compinit
+  compinit
+fi
+
+# Load Zsh's colors system
+autoload -Uz colors && colors
+
+# Enable colorized output for ls command
+export CLICOLOR=1
+export LSCOLORS=ExGxBxDxCxEgEdxbxgxcxd
+
+# Define aliases
+alias ls='ls -G'
+
+# Set up your prompt
+PS1="%{$fg[green]%}%n%{$reset_color%}@%{$fg[green]%}%m%{$reset_color%}:%{$fg[cyan]%}%~%{$reset_color%}$ "
+
+# Export paths and configurations
+export PATH="$HOME/.poetry/bin:$PATH"
+export NVM_DIR="$HOME/.nvm"
+
+# Load nvm if available
+if [ -s "/usr/local/opt/nvm/nvm.sh" ]; then
+  source "/usr/local/opt/nvm/nvm.sh"
+fi
+
+# Load nvm bash completion if available
+if [ -s "/usr/local/opt/nvm/etc/bash_completion.d/nvm" ]; then
+  source "/usr/local/opt/nvm/etc/bash_completion.d/nvm"
+fi
+
+# Load Google Cloud SDK configurations if available
+gc_sdk_path='/Users/lopezquevedodiego/Downloads/google-cloud-sdk'
+if [ -f "$gc_sdk_path/path.zsh.inc" ]; then
+  source "$gc_sdk_path/path.zsh.inc"
+fi
+
+if [ -f "$gc_sdk_path/completion.zsh.inc" ]; then
+  source "$gc_sdk_path/completion.zsh.inc"
+fi
+
+# Set default editor
+export EDITOR=nano
+export VISUAL="$EDITOR"
+
+source $HOMEBREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh
